@@ -17,17 +17,32 @@ struct LiveWallpaperApp: App {
         WindowGroup {
             ContentView()
                 .environment(manager)
+                .onAppear {
+                    // Close the system color panel so it doesn't reopen from the previous session.
+                    NSColorPanel.shared.close()
+                }
         }
         .windowResizability(.contentSize)
         .defaultSize(width: 400, height: 560)
         .commands {
             CommandGroup(replacing: .newItem) {}
+            CommandGroup(replacing: .appInfo) {
+                AboutMenuButton()
+            }
             CommandMenu("Wallpaper") {
                 Button("Parar Wallpaper") { manager.remove() }
                     .keyboardShortcut("w", modifiers: [.command, .shift])
                     .disabled(!manager.isWallpaperActive)
             }
         }
+
+        // ── About window ─────────────────────────────────────────────────────
+        Window("Sobre o Live Wallpaper", id: "about") {
+            AboutView()
+        }
+        .windowResizability(.contentSize)
+        .defaultPosition(.center)
+        .restorationBehavior(.disabled)
 
         // ── Menu bar extra ───────────────────────────────────────────────────
         MenuBarExtra(
@@ -46,5 +61,16 @@ struct LiveWallpaperApp: App {
             Button("Sair") { NSApplication.shared.terminate(nil) }
         }
         .menuBarExtraStyle(.menu)
+    }
+}
+
+// ── Helper to access openWindow inside a Commands context ────────────────────
+private struct AboutMenuButton: View {
+    @Environment(\.openWindow) private var openWindow
+
+    var body: some View {
+        Button("Sobre o Live Wallpaper") {
+            openWindow(id: "about")
+        }
     }
 }

@@ -28,7 +28,9 @@ final class WallpaperWindowManager {
             object: nil,
             queue: .main
         ) { [weak self] _ in
-            self?.remove()
+            Task { @MainActor [weak self] in
+                self?.remove()
+            }
         }
     }
 
