@@ -23,11 +23,17 @@ uvx yt-dlp -f "bestvideo[vcodec^=avc1]/best[ext=mp4]" --merge-output-format mp4 
 ## 💻 Como rodar o projeto
 
 1. Abra o projeto `LiveWallpaper.xcodeproj` no Xcode.
-2. Selecione o seu Mac como destino de build.
-3. Aperte **Run (⌘ + R)**.
+2. Na aba **Signing & Capabilities** do target `LiveWallpaper`, adicione o seu **Development Team** (sua conta Apple ID).
+3. Selecione o seu Mac como destino de build.
+4. Aperte **Run (⌘ + R)**.
 
 ## 🛠️ Tecnologias Utilizadas
 
 - **SwiftUI**: Para toda a construção da interface do tipo "System Settings" (Painel nativo).
 - **AppKit**: Para manipulação profunda de janelas (`NSWindow.Level`) e renderização nativa de views via `NSHostingView` e `NSView`.
 - **AVFoundation / AVKit**: Para a reprodução otimizada, silenciosa e em loop perfeito do vídeo na janela de desktop.
+
+
+## 📄 Licença
+
+Este projeto está licenciado sob os termos descritos no arquivo [LICENSE](LICENSE).

@@ -1,0 +1,117 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- App background gradient: color 1 (#6C63FF purple) → color 2 (#EC4899 pink) -->
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   style="stop-color:#6C63FF;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#EC4899;stop-opacity:1"/>
+    </linearGradient>
+
+    <!-- Soft ambient radial glow centered on the screen element -->
+    <radialGradient id="ambient-glow" cx="50%" cy="48%" r="52%">
+      <stop offset="0%"   style="stop-color:#ffffff;stop-opacity:0.18"/>
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0"/>
+    </radialGradient>
+
+    <!-- Wallpaper thumbnail: lighter diagonal gradient from purple to pink -->
+    <linearGradient id="wallpaper-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   style="stop-color:#9b8fff;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#f472b6;stop-opacity:1"/>
+    </linearGradient>
+
+    <!-- Shimmer overlay on the monitor screen -->
+    <linearGradient id="screen-sheen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   style="stop-color:#ffffff;stop-opacity:0.14"/>
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0"/>
+    </linearGradient>
+
+    <!-- Monitor body gradient (dark glass look) -->
+    <linearGradient id="monitor-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   style="stop-color:#2d2540;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#1a1225;stop-opacity:1"/>
+    </linearGradient>
+
+    <!-- Drop shadow for the monitor -->
+    <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="28"/>
+      <feOffset dx="0" dy="20" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.5"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Glow filter for sparkle stars -->
+    <filter id="sparkle-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background squircle with app gradient -->
+  <rect x="0" y="0" width="1024" height="1024" rx="225" ry="225" fill="url(#bg-grad)"/>
+
+  <!-- Ambient radial glow overlay -->
+  <rect x="0" y="0" width="1024" height="1024" rx="225" ry="225" fill="url(#ambient-glow)"/>
+
+  <!-- ── Monitor / Desktop metaphor ── -->
+  <g transform="translate(512, 554)" filter="url(#soft-shadow)">
+
+    <!-- Monitor outer bezel -->
+    <rect x="-310" y="-290" width="620" height="420" rx="32" fill="url(#monitor-grad)"/>
+    <!-- Subtle highlight rim around the bezel -->
+    <rect x="-310" y="-290" width="620" height="420" rx="32" fill="none"
+          stroke="rgba(255,255,255,0.18)" stroke-width="3"/>
+
+    <!-- Screen area: live wallpaper thumbnail -->
+    <rect x="-278" y="-258" width="556" height="348" rx="16" fill="url(#wallpaper-grad)"/>
+
+    <!-- Decorative abstract layers suggesting a sky/landscape wallpaper scene -->
+    <!-- Bottom land mass -->
+    <ellipse cx="0" cy="140" rx="340" ry="110" fill="rgba(30,10,50,0.35)"/>
+    <!-- Mid aurora sweep -->
+    <ellipse cx="-60" cy="60" rx="300" ry="90" fill="rgba(255,255,255,0.08)"/>
+    <!-- Top subtle cloud puff -->
+    <ellipse cx="80" cy="-60" rx="220" ry="70" fill="rgba(255,255,255,0.07)"/>
+
+    <!-- Screen sheen for glassy depth -->
+    <rect x="-278" y="-258" width="556" height="348" rx="16" fill="url(#screen-sheen)"/>
+
+    <!-- Monitor stand neck -->
+    <rect x="-18" y="130" width="36" height="60" rx="8" fill="#1a1225"/>
+
+    <!-- Monitor base -->
+    <rect x="-90" y="185" width="180" height="22" rx="11" fill="#1a1225"/>
+    <rect x="-90" y="185" width="180" height="22" rx="11" fill="none"
+          stroke="rgba(255,255,255,0.10)" stroke-width="2"/>
+  </g>
+
+  <!-- Sparkle stars scattered around to convey a live/dynamic feel -->
+  <!-- Top-left large sparkle -->
+  <g filter="url(#sparkle-glow)" opacity="0.85">
+    <polygon points="160,200 166,214 180,214 169,222 173,236 160,228 147,236 151,222 140,214 154,214"
+             fill="#ffffff"/>
+  </g>
+  <!-- Top-right small sparkle -->
+  <g filter="url(#sparkle-glow)" opacity="0.70">
+    <polygon points="840,170 844,180 854,180 846,186 849,196 840,190 831,196 834,186 826,180 836,180"
+             fill="#ffffff"/>
+  </g>
+  <!-- Bottom-right medium sparkle -->
+  <g filter="url(#sparkle-glow)" opacity="0.75">
+    <polygon points="820,780 826,796 842,796 829,806 834,822 820,812 806,822 811,806 798,796 814,796"
+             fill="#ffffff"/>
+  </g>
+  <!-- Small accent dots -->
+  <circle cx="720" cy="230" r="6" fill="rgba(255,255,255,0.55)"/>
+  <circle cx="280" cy="810" r="5" fill="rgba(255,255,255,0.45)"/>
+  <circle cx="190" cy="750" r="4" fill="rgba(255,255,255,0.35)"/>
+
+  <!-- Top glass sheen on the squircle (macOS Tahoe-style) -->
+  <path d="M 0 0 H 1024 V 310 Q 512 430 0 310 Z" fill="rgba(255,255,255,0.07)"/>
+</svg>
