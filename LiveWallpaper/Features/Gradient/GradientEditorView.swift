@@ -56,7 +56,7 @@ struct GradientEditorView: View {
                         if colors.count > 2 {
                             Spacer()
                             Button(role: .destructive) {
-                                withAnimation { _ = colors.remove(at: index) }
+                                _ = withAnimation { colors.remove(at: index) }
                                 isApplied = false
                             } label: {
                                 Image(systemName: "minus.circle.fill")
