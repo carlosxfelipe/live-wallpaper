@@ -47,3 +47,6 @@ playground.xcworkspace
 # Mac OS
 .DS_Store
 *.dmg
+*.mp4
+*.m4a
+*.webm

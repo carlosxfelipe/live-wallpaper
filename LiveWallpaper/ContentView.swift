@@ -8,17 +8,59 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+    @Environment(WallpaperWindowManager.self) private var manager
+    @State private var selectedTab: Tab = .gradient
+
+    enum Tab: String, CaseIterable, Identifiable {
+        case gradient = "Degradê"
+        case video = "Vídeo"
+        var id: String { rawValue }
+        var icon: String {
+            switch self {
+            case .gradient: return "paintpalette"
+            case .video: return "film.stack"
+            }
         }
-        .padding()
+    }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            // ── Status bar ───────────────────────────────────────────────────
+            HStack(spacing: 6) {
+                Circle()
+                    .fill(manager.isWallpaperActive ? Color.green : Color.secondary.opacity(0.4))
+                    .frame(width: 8, height: 8)
+                Text(manager.isWallpaperActive ? "Wallpaper ativo" : "Nenhum wallpaper ativo")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Spacer()
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
+            .background(.bar)
+
+            Divider()
+
+            // ── Tab content ──────────────────────────────────────────────────
+            TabView(selection: $selectedTab) {
+                GradientEditorView()
+                    .tabItem {
+                        Label(Tab.gradient.rawValue, systemImage: Tab.gradient.icon)
+                    }
+                    .tag(Tab.gradient)
+
+                VideoEditorView()
+                    .tabItem {
+                        Label(Tab.video.rawValue, systemImage: Tab.video.icon)
+                    }
+                    .tag(Tab.video)
+            }
+        }
+        .frame(width: 400)
     }
 }
 
 #Preview {
     ContentView()
+        .environment(WallpaperWindowManager.shared)
 }
