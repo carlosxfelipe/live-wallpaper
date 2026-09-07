@@ -67,12 +67,16 @@ struct LiveWallpaperApp: App {
                 Label("Nenhum wallpaper ativo", systemImage: "circle.dotted")
             }
             Divider()
-            Toggle("Cafeinado", isOn: $caffeinateManager.isCaffeinated)
+            Toggle(isOn: $caffeinateManager.isCaffeinated) {
+                Label("Cafeinado", systemImage: "cup.and.saucer.fill")
+            }
             Divider()
             OpenPanelMenuButton()
             AboutMenuButton()
             Divider()
-            Button("Sair") { NSApplication.shared.terminate(nil) }
+            Button(action: { NSApplication.shared.terminate(nil) }) {
+                Label("Sair", systemImage: "power")
+            }
         }
         .menuBarExtraStyle(.menu)
     }
@@ -84,9 +88,11 @@ private struct AboutMenuButton: View {
     @Environment(\.openWindow) private var openWindow
 
     var body: some View {
-        Button("Sobre") {
+        Button(action: {
             openWindow(id: "about")
             NSApp.activate(ignoringOtherApps: true)
+        }) {
+            Label("Sobre", systemImage: "info.circle")
         }
     }
 }
@@ -95,9 +101,11 @@ private struct OpenPanelMenuButton: View {
     @Environment(\.openWindow) private var openWindow
 
     var body: some View {
-        Button("Abrir Painel") {
+        Button(action: {
             openWindow(id: "main")
             NSApp.activate(ignoringOtherApps: true)
+        }) {
+            Label("Abrir Painel", systemImage: "macwindow")
         }
     }
 }
