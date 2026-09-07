@@ -19,6 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 struct LiveWallpaperApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @State private var manager = WallpaperWindowManager.shared
+    @State private var caffeinateManager = CaffeinateManager.shared
 
     var body: some Scene {
         // ── Main window ──────────────────────────────────────────────────────
@@ -59,10 +60,14 @@ struct LiveWallpaperApp: App {
         ) {
             if manager.isWallpaperActive {
                 Label("Wallpaper ativo", systemImage: "checkmark.circle.fill")
-                Button("Parar Wallpaper") { manager.remove() }
+                Button(action: { manager.remove() }) {
+                    Label("Parar Wallpaper", systemImage: "stop.circle")
+                }
             } else {
                 Label("Nenhum wallpaper ativo", systemImage: "circle.dotted")
             }
+            Divider()
+            Toggle("Cafeinado", isOn: $caffeinateManager.isCaffeinated)
             Divider()
             OpenPanelMenuButton()
             AboutMenuButton()
