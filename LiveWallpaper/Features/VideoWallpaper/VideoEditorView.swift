@@ -60,8 +60,11 @@ struct VideoEditorView: View {
                     .keyboardShortcut(.defaultAction)
                 }
             } footer: {
-                Text("O vídeo será reproduzido em loop sem áudio.")
-                    .foregroundStyle(.secondary)
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("O vídeo será reproduzido em loop sem áudio.")
+                    Text("Nota: O macOS não suporta vídeos com codec AV1 nativamente. Se a tela ficar cinza, certifique-se de que o vídeo está no formato H.264 (avc1).")
+                }
+                .foregroundStyle(.secondary)
             }
         }
         .formStyle(.grouped)

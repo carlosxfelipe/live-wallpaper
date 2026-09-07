@@ -65,6 +65,7 @@ struct LiveWallpaperApp: App {
             }
             Divider()
             OpenPanelMenuButton()
+            AboutMenuButton()
             Divider()
             Button("Sair") { NSApplication.shared.terminate(nil) }
         }
@@ -78,8 +79,9 @@ private struct AboutMenuButton: View {
     @Environment(\.openWindow) private var openWindow
 
     var body: some View {
-        Button("Sobre o Live Wallpaper") {
+        Button("Sobre") {
             openWindow(id: "about")
+            NSApp.activate(ignoringOtherApps: true)
         }
     }
 }
