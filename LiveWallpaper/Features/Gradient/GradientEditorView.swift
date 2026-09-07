@@ -10,10 +10,8 @@ import SwiftUI
 struct GradientEditorView: View {
     @Environment(WallpaperWindowManager.self) private var manager
 
-    @State private var colors: [Color] = [
-        Color(hex: "6C63FF"),
-        Color(hex: "EC4899"),
-    ]
+    @State private var color1: Color = .init(hex: "6C63FF")
+    @State private var color2: Color = .init(hex: "EC4899")
     @State private var direction: GradientDirection = .horizontal
     @State private var isApplied = false
 
@@ -24,7 +22,7 @@ struct GradientEditorView: View {
             // ── Preview ──────────────────────────────────────────────────────
             Section {
                 LinearGradient(
-                    colors: colors.isEmpty ? [.black] : colors,
+                    colors: [color1, color2],
                     startPoint: direction.startPoint,
                     endPoint: direction.endPoint
                 )
@@ -45,46 +43,14 @@ struct GradientEditorView: View {
             }
 
             // ── Colors ───────────────────────────────────────────────────────
-            Section {
-                ForEach(Array(colors.enumerated()), id: \.offset) { index, _ in
-                    HStack {
-                        ColorPicker("Cor \(index + 1)", selection: Binding(
-                            get: { colors[index] },
-                            set: { colors[index] = $0; isApplied = false }
-                        ))
-
-                        if colors.count > 2 {
-                            Spacer()
-                            Button(role: .destructive) {
-                                _ = withAnimation { colors.remove(at: index) }
-                                isApplied = false
-                            } label: {
-                                Image(systemName: "minus.circle.fill")
-                                    .symbolRenderingMode(.hierarchical)
-                                    .foregroundStyle(.red)
-                            }
-                            .buttonStyle(.plain)
-                        }
-                    }
-                }
-
-                if colors.count < 6 {
-                    Button {
-                        withAnimation { colors.append(randomColor()) }
-                        isApplied = false
-                    } label: {
-                        Label("Adicionar Cor", systemImage: "plus")
-                    }
-                }
-
-            } header: {
-                Text("Cores")
-            } footer: {
-                Text("Mínimo 2, máximo 6 cores.")
-                    .foregroundStyle(.secondary)
+            Section("Cores") {
+                ColorPicker("Cor 1", selection: $color1)
+                    .onChange(of: color1) { isApplied = false }
+                ColorPicker("Cor 2", selection: $color2)
+                    .onChange(of: color2) { isApplied = false }
             }
 
-            // ── Apply ────────────────────────────────────────────
+            // ── Apply ────────────────────────────────────────────────────────
             Section {
                 HStack {
                     if manager.isWallpaperActive {
@@ -107,16 +73,8 @@ struct GradientEditorView: View {
     // MARK: - Actions
 
     private func applyWallpaper() {
-        manager.apply(mode: .gradient(colors: colors, direction: direction))
+        manager.apply(mode: .gradient(colors: [color1, color2], direction: direction))
         withAnimation(.spring(response: 0.3)) { isApplied = true }
-    }
-
-    private func randomColor() -> Color {
-        let palette: [Color] = [
-            Color(hex: "F43F5E"), Color(hex: "FB923C"), Color(hex: "FACC15"),
-            Color(hex: "4ADE80"), Color(hex: "22D3EE"), Color(hex: "818CF8"),
-        ]
-        return palette.randomElement() ?? .purple
     }
 }
 

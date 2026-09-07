@@ -8,13 +8,21 @@
 import AppKit
 import SwiftUI
 
+class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationWillFinishLaunching(_: Notification) {
+        // Safely hide the app from the Dock before the UI finishes launching
+        NSApp.setActivationPolicy(.accessory)
+    }
+}
+
 @main
 struct LiveWallpaperApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @State private var manager = WallpaperWindowManager.shared
 
     var body: some Scene {
         // ── Main window ──────────────────────────────────────────────────────
-        WindowGroup {
+        Window("Live Wallpaper", id: "main") {
             ContentView()
                 .environment(manager)
                 .onAppear {
@@ -56,7 +64,7 @@ struct LiveWallpaperApp: App {
                 Label("Nenhum wallpaper ativo", systemImage: "circle.dotted")
             }
             Divider()
-            Button("Abrir Painel") { NSApp.activate(ignoringOtherApps: true) }
+            OpenPanelMenuButton()
             Divider()
             Button("Sair") { NSApplication.shared.terminate(nil) }
         }
@@ -64,13 +72,25 @@ struct LiveWallpaperApp: App {
     }
 }
 
-// ── Helper to access openWindow inside a Commands context ────────────────────
+// ── Helpers to access openWindow inside a Commands/MenuBar context ───────────
+
 private struct AboutMenuButton: View {
     @Environment(\.openWindow) private var openWindow
 
     var body: some View {
         Button("Sobre o Live Wallpaper") {
             openWindow(id: "about")
+        }
+    }
+}
+
+private struct OpenPanelMenuButton: View {
+    @Environment(\.openWindow) private var openWindow
+
+    var body: some View {
+        Button("Abrir Painel") {
+            openWindow(id: "main")
+            NSApp.activate(ignoringOtherApps: true)
         }
     }
 }
