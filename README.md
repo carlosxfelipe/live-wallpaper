@@ -2,6 +2,17 @@
 
 Um aplicativo stand-alone e nativo para macOS que permite definir degradês personalizados e vídeos em loop como papel de parede, rodando perfeitamente no background da mesa (nível `.desktopWindow`) e atrás de todos os ícones.
 
+![Screenshot 1](assets/screenshot_1.png)
+![Screenshot 2](assets/screenshot_2.png)
+
+## 📦 Instalação
+
+Você pode instalar o aplicativo via Homebrew com o comando abaixo:
+
+```bash
+brew install carlosxfelipe/tap/live-wallpaper
+```
+
 ## 🚀 Como baixar vídeos compatíveis do YouTube
 
 O macOS (através do seu motor nativo `AVFoundation`) **não suporta** nativamente a reprodução de arquivos MP4 que utilizem codecs como AV1 ou VP9. Infelizmente, o YouTube prioriza esses codecs para vídeos em alta resolução (como 4K). 
