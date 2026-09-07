@@ -80,7 +80,7 @@ struct VideoEditorView: View {
     @ViewBuilder
     private var dropZoneOrPreview: some View {
         if let player {
-            VideoPlayer(player: player)
+            AVPlayerViewRepresentable(player: player)
                 .frame(height: 140)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .overlay(alignment: .bottomTrailing) {
@@ -199,4 +199,20 @@ struct VideoEditorView: View {
     VideoEditorView()
         .environment(WallpaperWindowManager.shared)
         .frame(width: 400)
+}
+
+struct AVPlayerViewRepresentable: NSViewRepresentable {
+    let player: AVPlayer
+
+    func makeNSView(context _: Context) -> AVPlayerView {
+        let view = AVPlayerView()
+        view.player = player
+        view.controlsStyle = .none
+        view.videoGravity = .resizeAspectFill
+        return view
+    }
+
+    func updateNSView(_ nsView: AVPlayerView, context _: Context) {
+        nsView.player = player
+    }
 }
