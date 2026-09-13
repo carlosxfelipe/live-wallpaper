@@ -46,7 +46,7 @@ struct LiveWallpaperApp: App {
         }
 
         // ── About window ─────────────────────────────────────────────────────
-        Window("Sobre o Live Wallpaper", id: "about") {
+        Window("Sobre", id: "about") {
             AboutView()
         }
         .windowResizability(.contentSize)
